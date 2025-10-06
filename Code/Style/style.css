@@ -1,0 +1,60 @@
+/* Cyrene Theme (Default) */
+:root {
+  --bg-color: #fad8e9;
+  --text-color: #d3f0fd;
+  --accent-color: #d498e0;
+}
+
+/* Sparkle Theme*/
+[data-theme="sparkle"] {
+  --bg-color: #fc3576;
+  --text-color: #2c89dc;
+  --accent-color: #b41238;
+}
+
+/* Castorice Theme */
+[data-theme="castorice"] {
+  --bg-color: #b56cf4;
+  --text-color: #231a4f;
+  --accent-color: #fdb3fe;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.5s ease, color 0.5s ease;
+  font-family: "Georgia", serif;
+  text-align: center;
+
+}
+
+h1 {
+  color: var(--accent-color);
+}
+
+/*THEME*/
+/* NAVBAR */
+
+/* Style the navbar */
+#navbar {
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+  background-color: var(--accent-color);
+}
+
+/* Navbar links */
+#navbar a {
+  float: left;
+  display: block;
+  text-align: center;
+  padding: 14px;
+  text-decoration: none;
+  color: var(--text-color)
+}
+
+/* Page content */
+.content {
+  padding: 16px;
+}
+/*NAVBAR*/
