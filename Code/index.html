@@ -2,30 +2,95 @@
 <html lang="en" data-theme="Cyrene">
 
 <head>
-    <meta charset="UTF-8">
+    <meta LCset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MaiWaif</title>
     <link rel="stylesheet" href="Style/style.css">
 </head>
 
 <body>
-    
-        <div id="navbar">
-            <a href="#home">Home</a>
-            <a href="#news">News</a>
-            <a href="#contact">Contact</a>
+
+    <div id="navbar">
+        <a href="#home">Home</a>
+        <a href="#news">News</a>
+        <div id="searchContainer">
+            <input type="text" id="searchInput" placeholder="Search">
         </div>
-    
+        <div class="menu-icon" id="menuButton">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
 
-    <h1>Selamat Datang, Yang Mulia Baginda Raja yang terhormat 👑</h1>
-    <p>Pilih tema kerajaan:</p>
-    <a style="color: black;" href="img.html">ANJAAAY</a>
+    <div id="sidebar">
+        <div id="sidebarTheme">
+            Theme:
+            <select name="theme" id="themeSelector">
+                <option value="cyrene">Cyrene</option>
+                <option value="sparkle">Sparkle</option>
+                <option value="castorice">Castorice</option>
+            </select>
+        </div>
+    </div>
 
-    <select id="themeSelector">
-        <option value="cyrene">🌞 Cyrene</option>
-        <option value="sparkle">🌙 Sparkle</option>
-        <option value="castorice">🔮 Castorice</option>
-    </select>
+    <div id="headerOut">
+        <div id="headerOutLogo">
+            <h1 id="headerTitle">MaiWaif</h1>
+            <!-- <img id="headerLogo" src="Asset/Honkai_Star_Rail_Logo.webp" alt=""> -->
+        </div>
+
+        <div id="headerIn">
+            <div>
+                <div class="headerInTitle">
+                    Sparkle
+                </div>
+                <div class="headerImgWrapper">
+                    <img class="headerInImg" data-normal="Asset/LC_Sparkle.png" data-hover="Asset/Char_Sparkle.webp"
+                        src="Asset/LC_Sparkle.png" alt="">
+                </div>
+                <div class="headerInDesc">
+                    <div class="headerDescText">
+                    Lorem Ipsum
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="headerInTitle">
+                    Cyrene
+                </div>
+                <div class="headerImgWrapper">
+                    <img class="headerInImg" data-normal="Asset/LC_Cyrene.png" data-hover="Asset/Char_Cyrene.WEBP"
+                        src="Asset/LC_Cyrene.png" alt="">
+                </div>
+                <div class="headerInDesc">
+                    <div class="headerDescText">
+                    Lorem Ipsum
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="headerInTitle">
+                    Castorice
+                </div>
+                <div class="headerImgWrapper">
+                    <img class="headerInImg" data-normal="Asset/LC_Castorice.png" data-hover="Asset/Char_Castorice.webp"
+                        src="Asset/LC_Castorice.png" alt="">
+                </div>
+                <div class="headerInDesc">
+                    <div class="headerDescText">
+                        Lorem Ipsum
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
 
     <script src="Script/script.js"></script>
 </body>
