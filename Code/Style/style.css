@@ -1,3 +1,13 @@
+/* font */
+@font-face {
+  src: url('../Asset/Font/D-DIN.woff2') format('woff2');
+  font-family: 'DIN';
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
 /* Cyrene Theme (Default) */
 :root {
   --bg-color: #fad8e9;
@@ -5,7 +15,24 @@
   --accent-color: #d498e0;
   --text-color2: #b8c0c3;
   --border-color: #e087f2;
+  --normal-cursor: url("../Asset/Cursor/Cyrene/Normal.cur");
+  --link-cursor: url("../Asset/Cursor/Cyrene/Link.cur");
+  --text-cursor: url("../Asset/Cursor/Cyrene/Text.cur");
+  cursor: var(--normal-cursor), auto;
+
 }
+
+:root a,
+:root button {
+  cursor: var(--link-cursor), pointer;
+}
+
+:root input,
+:root textarea {
+  cursor: var(--text-cursor), text;
+}
+
+/*Cyrene Theme (Default) */
 
 /* Sparkle Theme*/
 [data-theme="sparkle"] {
@@ -13,7 +40,12 @@
   --text-color: #2c89dc;
   --accent-color: #b41238;
   --border-color: #97102f;
+  --normal-cursor: url("../Asset/Cursor/Sparkle/Normal.cur");
+  --text-cursor: url("../Asset/Cursor/Sparkle/text.png");
+  cursor: var(--text-cursor), text;
 }
+
+/* Sparkle Theme */
 
 /* Castorice Theme */
 [data-theme="castorice"] {
@@ -21,13 +53,33 @@
   --text-color: #231a4f;
   --accent-color: #fdb3fe;
   --border-color: #ed8fee;
+  --normal-cursor: url("../Asset/Cursor/Castorice/Normal.cur");
+  --link-cursor: url("../Asset/Cursor/Castorice/Link.cur");
+  --text-cursor: url("../Asset/Cursor/Castorice/Text.cur");
+  cursor: var(--normal-cursor), auto;
+
+
 }
+
+[data-theme="castorice"] a,
+[data-theme="castorice"] button {
+  cursor: var(--link-cursor), pointer;
+}
+
+
+[data-theme="castorice"] input,
+[data-theme="castorice"] textarea,
+[data-theme="castorice"] text {
+  cursor: var(--text-cursor), text;
+}
+
+/* Castorice Theme */
 
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
   transition: background-color 0.5s ease, color 0.5s ease;
-  font-family: "Georgia", serif;
+  font-family: "DIN", serif;
   text-align: center;
 
 }
@@ -56,7 +108,7 @@ h1 {
   padding: 14px 16px;
   text-decoration: none;
   color: var(--text-color);
-  
+
 }
 
 
@@ -74,7 +126,7 @@ h1 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  cursor: pointer;
+  cursor: var(--link-cursor), pointer;
   float: left;
   text-align: center;
   margin-top: 10px;
@@ -94,14 +146,16 @@ h1 {
 .menu-icon.active span:nth-child(1) {
   transform: rotate(45deg) translate(6px, 6px);
 }
+
 .menu-icon.active span:nth-child(2) {
   opacity: 0;
 }
+
 .menu-icon.active span:nth-child(3) {
   transform: rotate(-45deg) translate(7px, -7px);
 }
 
-#searchContainer{
+#searchContainer {
   float: right;
   margin-top: 0.3rem;
   margin-right: 20px;
@@ -109,7 +163,7 @@ h1 {
   text-align: center;
 }
 
-#searchInput{
+#searchInput {
   background-color: var(--accent-color);
   color: var(--text-color);
   border-color: var(--text-color);
@@ -120,18 +174,68 @@ h1 {
   border-width: 0.1rem;
   padding: 5px;
 
-  
+
 }
 
 
 
-  ::placeholder{
-    color: var(--text-color);
-  }
+::placeholder {
+  color: var(--text-color);
+}
 
 
 /*NAVBAR*/
 /*SIDEBAR*/
+
+#gearIcon {
+  width: 20%;
+}
+
+
+#settingBtn img {
+
+  transition: transform 0.6s ease;
+  transform: rotate(0deg);
+}
+
+#settingBtn {
+  cursor: var(--link-cursor), pointer;
+  margin-top: auto;
+  margin-bottom: 3rem;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 51;
+
+
+}
+
+.rotating {
+  transform: rotate(360deg);
+}
+
+.setting-text {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar.expanded .settings-text {
+  opacity: 1;
+}
+
+.sidebarBtn{
+  font-size: 1.2rem;
+}
+.sidebarBtnText{
+  text-decoration: none;
+}
+
+.sidebarBtnText:hover{
+  text-decoration: underline;
+}
+
+
 
 #sidebar {
   position: fixed;
@@ -147,6 +251,32 @@ h1 {
   z-index: 50;
   margin-top: 4rem;
   border: var(--border-color) solid 0.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 1rem;
+
+}
+
+#settingBar {
+  left: -250px;
+  position: absolute;
+  width: 250px;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: left 0.5s ease;
+  z-index: 50;
+  margin-top: 4rem;
+  border: var(--border-color) solid 0.2rem;
+  background-color: var(--accent-color);
+
+}
+
+
+
+#settingBar.active {
+  left: 14rem;
 }
 
 #sidebarLink {
@@ -158,39 +288,43 @@ h1 {
   left: 0;
 }
 
-#themeSelector{
+#themeSelector {
   background-color: var(--bg-color);
   border-color: var(--text-color);
   border-width: 0.12rem;
   border-radius: 5px;
   padding: 5px;
   margin-bottom: 10px;
-  cursor: pointer;
+  cursor: var(--link-cursor), pointer;
   color: var(--border-color);
   -webkit-text-stroke: var(--accent-color);
   -webkit-text-stroke-width: 0.02rem;
-  
+
 }
 
-#sidebarTheme{
+#sidebarTheme {
   float: left;
   font-weight: bold;
 }
 
 /*SIDEBAR*/
 /*HEADER*/
-#headerIn{
+#headerIn {
+
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+
+
+}
+
+#headerInWrapper {
   background-color: var(--accent-color);
   border-radius: 0.2rem;
   border-top: 0.5rem solid var(--border-color);
   padding: 0.5rem;
   text-align: center;
-
- display: grid;                   
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;                        
-
-
 }
 
 #headerOut {
@@ -202,18 +336,22 @@ h1 {
   justify-content: center;
 }
 
-#headerLogo{
+#headerLogo {
   width: 15%;
-  
-  
+
+
 }
 
-#headerLink{
+#headerTitle {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+#headerLink {
   columns: 5;
   grid-row: 5;
 }
 
-#headerTitle{
+#headerTitle {
   text-align: center;
   font-size: 5rem;
   color: var(--border-color);
@@ -225,19 +363,19 @@ h1 {
   text-underline-offset: 0.5rem;
 }
 
-.headerInTitle{
+.headerInTitle {
   border-bottom: solid var(--border-color);
   border-width: 0.2rem;
   text-align: center;
   padding: 0.2rem;
   font-size: 120%;
- 
+
 }
 
 
 
 
-.headerInImg{
+.headerInImg {
   margin-top: 1rem;
   border-color: var(--border-color);
   border-width: 0.3rem;
@@ -247,14 +385,30 @@ h1 {
 
 
 }
-  .headerInDesc{
-    text-align: center;
-    border-top: var(--border-color) solid 0.3rem;
-    margin-top: 0.4rem;
-  }
 
-  .headerDescText{
-    padding-top: 0.3rem;
-  }
+.headerInDesc {
+  text-align: center;
+  border-top: var(--border-color) solid 0.3rem;
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
+  font-size: 1.2rem;
+}
+
+.headerDescText {
+  padding-top: 0.3rem;
+}
+
+.separatorTop {
+  border-top: var(--border-color) solid 0.3rem;
+}
+
+.separatorBot {
+  border-bottom: var(--border-color) solid 0.3rem;
+}
+
+#headerFoot {
+  padding: 1rem;
+  font-size: 1.4rem;
+}
+
 /*header*/
-
