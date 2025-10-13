@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player Website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .music-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9em;
+        }
+
+        input[type="text"], input[type="url"] {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus, input[type="url"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            height: 6px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            border: none;
+        }
+
+        #volumeValue {
+            font-weight: 600;
+            color: #667eea;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        button {
+            padding: 12px 25px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .music-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .music-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .music-icon {
+            font-size: 2em;
+            color: #667eea;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .music-icon.disabled {
+            color: #ccc;
+        }
+
+        .slash {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg) scaleX(0);
+            width: 3px;
+            height: 40px;
+            background: #ff4757;
+            border-radius: 2px;
+            transition: transform 0.3s;
+            transform-origin: center;
+        }
+
+        .slash.active {
+            transform: translate(-50%, -50%) rotate(45deg) scaleX(1);
+        }
+
+        .status {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #f0f0f0;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .status.playing {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.paused {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎵 Music Player</h1>
+        
+        <div class="music-controls">
+            <div class="control-group">
+                <label for="musicUrl">URL Musik:</label>
+                <input type="url" id="musicUrl" placeholder="Masukkan URL musik (MP3, WAV, dll)">
+            </div>
+
+            <button onclick="changeMusic()">Ganti Musik</button>
+
+            <div class="control-group">
+                <label>Volume:</label>
+                <div class="volume-control">
+                    <i class="fas fa-volume-down"></i>
+                    <input type="range" id="volumeSlider" min="0" max="100" value="50">
+                    <i class="fas fa-volume-up"></i>
+                    <span id="volumeValue">50%</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="iconColor">Warna Ikon Musik:</label>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <input type="color" id="iconColor" value="#667eea" style="width: 60px; height: 40px; border: 2px solid #ddd; border-radius: 8px; cursor: pointer;">
+                    <input type="text" id="iconColorText" value="#667eea" placeholder="#667eea" style="flex: 1;">
+                    <button onclick="applyIconColor()" style="padding: 8px 15px;">Terapkan</button>
+                </div>
+            </div>
+
+            <div class="status" id="status">Status: Belum ada musik</div>
+        </div>
+    </div>
+
+    <div class="music-toggle" onclick="toggleMusic()">
+        <div class="music-icon" id="musicIcon">
+            <i class="fas fa-music"></i>
+            <div class="slash" id="slash"></div>
+        </div>
+    </div>
+
+    <audio id="bgMusic" loop></audio>
+
+    <script>
+        let audio = document.getElementById('bgMusic');
+        let musicIcon = document.getElementById('musicIcon');
+        let slash = document.getElementById('slash');
+        let volumeSlider = document.getElementById('volumeSlider');
+        let volumeValue = document.getElementById('volumeValue');
+        let status = document.getElementById('status');
+        let iconColorPicker = document.getElementById('iconColor');
+        let iconColorText = document.getElementById('iconColorText');
+        let isPlaying = false;
+        let hasMusic = false;
+        let currentIconColor = '#667eea';
+
+        // Set default music (opsional)
+        const defaultMusic = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
+        audio.src = defaultMusic;
+        hasMusic = true;
+        updateStatus();
+
+        // Volume control
+        volumeSlider.addEventListener('input', function() {
+            let volume = this.value;
+            audio.volume = volume / 100;
+            volumeValue.textContent = volume + '%';
+        });
+
+        // Set initial volume
+        audio.volume = 0.5;
+
+        // Sync color picker and text input
+        iconColorPicker.addEventListener('input', function() {
+            iconColorText.value = this.value;
+        });
+
+        iconColorText.addEventListener('input', function() {
+            if (/^#[0-9A-F]{6}$/i.test(this.value)) {
+                iconColorPicker.value = this.value;
+            }
+        });
+
+        function applyIconColor() {
+            let color = iconColorText.value.trim();
+            
+            // Validate hex color
+            if (!/^#[0-9A-F]{6}$/i.test(color)) {
+                alert('Format warna tidak valid! Gunakan format hex seperti #667eea');
+                return;
+            }
+            
+            currentIconColor = color;
+            if (!musicIcon.classList.contains('disabled')) {
+                musicIcon.style.color = currentIconColor;
+            }
+        }
+
+        function toggleMusic() {
+            if (!hasMusic) {
+                alert('Silakan masukkan URL musik terlebih dahulu!');
+                return;
+            }
+
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                musicIcon.classList.add('disabled');
+                musicIcon.style.color = '#ccc';
+                slash.classList.add('active');
+            } else {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    musicIcon.classList.remove('disabled');
+                    musicIcon.style.color = currentIconColor;
+                    slash.classList.remove('active');
+                }).catch(err => {
+                    console.error('Error playing audio:', err);
+                    alert('Gagal memutar musik. Pastikan URL valid.');
+                });
+            }
+            updateStatus();
+        }
+
+        function changeMusic() {
+            let newUrl = document.getElementById('musicUrl').value.trim();
+            
+            if (!newUrl) {
+                alert('Silakan masukkan URL musik!');
+                return;
+            }
+
+            // Stop current music
+            audio.pause();
+            isPlaying = false;
+            
+            // Change source
+            audio.src = newUrl;
+            hasMusic = true;
+            
+            // Try to play
+            audio.play().then(() => {
+                isPlaying = true;
+                musicIcon.classList.remove('disabled');
+                musicIcon.style.color = currentIconColor;
+                slash.classList.remove('active');
+                updateStatus();
+            }).catch(err => {
+                console.error('Error loading audio:', err);
+                alert('Gagal memuat musik. Pastikan URL valid dan dapat diakses.');
+                hasMusic = false;
+                updateStatus();
+            });
+        }
+
+        function updateStatus() {
+            if (!hasMusic) {
+                status.textContent = 'Status: Belum ada musik';
+                status.className = 'status';
+            } else if (isPlaying) {
+                status.textContent = '▶ Status: Musik sedang diputar';
+                status.className = 'status playing';
+            } else {
+                status.textContent = '⏸ Status: Musik dijeda';
+                status.className = 'status paused';
+            }
+        }
+
+        // Handle audio errors
+        audio.addEventListener('error', function() {
+            alert('Error: Tidak dapat memuat file audio. Periksa URL Anda.');
+            hasMusic = false;
+            isPlaying = false;
+            updateStatus();
+        });
+
+        // Auto-update status when audio ends
+        audio.addEventListener('ended', function() {
+            isPlaying = false;
+            updateStatus();
+        });
+    </script>
+</body>
+</html>

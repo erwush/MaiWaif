@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MaiWaif</title>
     <link rel="stylesheet" href="Style/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
-
     <div id="navbar">
         <a href="#home">Home</a>
         <a href="#news">News</a>
@@ -21,6 +21,13 @@
             <span></span>
             <span></span>
         </div>
+    <div class="music-toggle" id="musicToggle" onclick="toggleMusic()">
+        <div class="music-icon" id="musicIconn">
+            <i class="fas fa-music" id="musicIcon"></i>
+            <audio id="bgMusic"  loop></audio>
+            <div class="slash" id="slash"></div>
+        </div>
+    </div>
     </div>
 
     <div id="sidebar">
@@ -60,6 +67,16 @@
                     <option value="castorice">Castorice</option>
                 </select>
             </div>
+            <div>
+                
+            </div>
+            <div class="settingText">
+                Custom Cursor:
+                <label class="switch">
+                        <input id="cursorToggle" type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+            </div>
         </div>
     </div>
 
@@ -80,7 +97,7 @@
                     </div>
                     <div class="headerInDesc">
                         <div class="headerDescText">
-                            Lorem Ipsum
+                            Earthly Escapade
                         </div>
                     </div>
                 </div>
@@ -94,7 +111,7 @@
                     </div>
                     <div class="headerInDesc">
                         <div class="headerDescText">
-                            Lorem Ipsum
+                            This Love, Forever
                         </div>
                     </div>
                 </div>
@@ -108,7 +125,7 @@
                     </div>
                     <div class="headerInDesc">
                         <div class="headerDescText">
-                            Lorem Ipsum
+                            Make Farewells More Beautiful
                         </div>
                     </div>
                 </div>
